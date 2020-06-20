@@ -26,11 +26,18 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        System.out.println(user.getPassword());
+
         return userRepository.save(user);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName);
     }
 }

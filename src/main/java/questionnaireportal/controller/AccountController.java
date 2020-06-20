@@ -6,7 +6,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,30 +30,33 @@ public class AccountController {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider  jwtTokenProvider;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AccountController(UserRepository userRepository, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public AccountController(UserService userService, UserRepository userRepository, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userService = userService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestUser) {
         try {
-            String username = requestUser.getEmail();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestUser.getPassword()));
+            String email = requestUser.getEmail();
 
-            User user = userService.findByUsername(username);
+            User user = userRepository.findByEmail(requestUser.getEmail());
+
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), requestUser.getPassword()));
 
             if(user == null) {
-                throw new UsernameNotFoundException("User with " + username + " not found");
+                throw new UsernameNotFoundException("User with email: " + email + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username);
+            String token = jwtTokenProvider.createToken(user.getEmail());
 
             Map<Object, Object> response = new HashMap<>();
-            response.put("username", username);
+            response.put("user", user);
             response.put("token", token);
 
             return ResponseEntity.ok(response);
@@ -60,8 +65,7 @@ public class AccountController {
         }
     }
 
-
-    @PostMapping("/registry")
+    @PostMapping("/registration")
     public ResponseEntity registry(@RequestBody User user) {
 
         System.out.println(user.getEmail());

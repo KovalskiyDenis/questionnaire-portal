@@ -1,9 +1,6 @@
 package questionnaireportal.security.jwt;
 
-import org.springframework.security.core.GrantedAuthority;
 import questionnaireportal.models.User;
-
-import java.util.List;
 
 public final class JwtUserFactory {
 

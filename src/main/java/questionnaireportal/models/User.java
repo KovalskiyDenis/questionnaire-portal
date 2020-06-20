@@ -1,5 +1,7 @@
 package questionnaireportal.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,9 +11,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String email;
+
+    @JsonIgnore
     private String password;
+
     private String firstName;
     private String lastName;
     private String phoneNumber;

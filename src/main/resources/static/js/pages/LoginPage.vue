@@ -47,16 +47,22 @@
             return {
                 email: null,
                 password: null,
-                /*csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                _csrf: this.csrf*/
             }
         },
         components: {LogoType, Navbar},
         methods: {
             login() {
-                this.$resource('/loginPage').save({headers: {}, body: {}}).then(result => {
-                    console.log(result)
+                this.$resource('/auth/login').save({email: this.email, password: this.password}).then(result => {
+                    if(result.ok) {
+                        this.$store.state.user = result.data.user;
+                        localStorage.setItem("token", result.data.token)
+                        console.log(result.data.token)
+                        this.$router.push("/fields")
+                    } else {
+
+                    }
                 })
+
             },
             showRegistrationPage() {
                 this.$router.push("/registration")

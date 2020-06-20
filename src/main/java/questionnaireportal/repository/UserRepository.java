@@ -5,5 +5,7 @@ import questionnaireportal.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsername(String name);
+    User findByEmail(String email);
+
+    User findByFirstName(String firstName);
 }

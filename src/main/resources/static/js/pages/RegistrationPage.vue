@@ -44,7 +44,7 @@
 
 <script>
     import LogoType from 'components/LogoType.vue'
-    import axios from 'axios'
+
     export default {
         components: {
             LogoType
@@ -63,7 +63,7 @@
         methods: {
             registry() {
                 if(this.password == this.confirmPassword) {
-                    this.$resource('/accounting/registry').save({email: this.email, password: this.password, firstName: this.firstName, lastName: this.lastName, phoneNumber: this.phoneNumber})
+                    this.$resource('/auth/registration').save({email: this.email, password: this.password, firstName: this.firstName, lastName: this.lastName, phoneNumber: this.phoneNumber})
                     this.$router.push('/login')
                 } else {
                     console.log("diff")
