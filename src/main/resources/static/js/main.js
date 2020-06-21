@@ -5,6 +5,7 @@ import router from 'router/router.js'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/js/bootstrap'
 import '@babel/polyfill'
 import store from 'store/store'
 

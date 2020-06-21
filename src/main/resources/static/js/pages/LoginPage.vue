@@ -56,7 +56,6 @@
                     if(result.ok) {
                         this.$store.state.user = result.data.user;
                         localStorage.setItem("token", result.data.token)
-                        console.log(result.data.token)
                         this.$router.push("/fields")
                     } else {
 
