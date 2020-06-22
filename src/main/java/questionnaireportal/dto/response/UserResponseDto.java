@@ -13,6 +13,17 @@ public class UserResponseDto {
     private String email;
     private String phoneNumber;
 
+    public UserResponseDto() {
+    }
+
+    public UserResponseDto(Long id, String firstName, String lastName, String email, String phoneNumber) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public User toUser(){
         User user = new User();
         user.setId(id);

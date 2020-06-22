@@ -52,16 +52,17 @@
         components: {LogoType, Navbar},
         methods: {
             login() {
-                this.$resource('/auth/login').save({email: this.email, password: this.password}).then(result => {
+                const login = '/auth/login?' + 'email=' + this.email + '&password=' + this.password
+                this.$resource(login).save().then(result => {
                     if(result.ok) {
-                        this.$store.state.user = result.data.user;
-                        localStorage.setItem("token", result.data.token)
-                        this.$router.push("/fields")
-                    } else {
-
+                        this.$resource('/auth/login').get().then(userResult => {
+                            if(result.ok) {
+                                console.log(userResult)
+                                this.$router.push("/fields")
+                            }
+                        })
                     }
                 })
-
             },
             showRegistrationPage() {
                 this.$router.push("/registration")

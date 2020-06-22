@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/fields")
 public class FieldsController {
 
     private final FieldsRepository fieldsRepository;
@@ -36,7 +37,7 @@ public class FieldsController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/fields")
+    @PostMapping
     public ResponseEntity create(@RequestBody FieldRequestDto requestField) {
         System.out.println(requestField.isActive());
         System.out.println(requestField.isRequired());

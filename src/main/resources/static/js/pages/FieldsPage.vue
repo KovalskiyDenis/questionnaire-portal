@@ -111,40 +111,39 @@
                 required: false,
                 isActive: false,
                 optionsInput: [
-                    {text: 'Single line text', value : 'SINGLE_LINE_TEXT'},
-                    {text: 'Multiline text', value : 'MULTILINE_TEXT'},
-                    {text: 'Radio button', value : 'RADIO_BUTTON'},
-                    {text: 'Checkbox', value : 'CHECKBOX'},
-                    {text: 'Combobox', value : 'COMBOBOX'},
-                    {text: 'Date', value : 'DATE'}
+                    {text: 'Single line text', value: 'SINGLE_LINE_TEXT'},
+                    {text: 'Multiline text', value: 'MULTILINE_TEXT'},
+                    {text: 'Radio button', value: 'RADIO_BUTTON'},
+                    {text: 'Checkbox', value: 'CHECKBOX'},
+                    {text: 'Combobox', value: 'COMBOBOX'},
+                    {text: 'Date', value: 'DATE'}
                 ],
                 displayOptions: 'none',
             }
         },
         name: "FieldsPage",
         methods: {
-            /*dosmth() {
-                const accessToken = 'Bearer_' + localStorage.getItem("token")
-                fetch('/fields', {method:'post', headers: {'Content-Type': 'application/json', 'Authorization': accessToken}, body: JSON.stringify({data: 'qwer'})}).then(console.log)
-            },*/
             showOptions() {
-                if(this.selected == 'RADIO_BUTTON' || this.selected == 'COMBOBOX') {
+                if (this.selected == 'RADIO_BUTTON' || this.selected == 'COMBOBOX') {
                     this.displayOptions = 'block'
-                }  else {
+                } else {
                     this.displayOptions = 'none';
                 }
             },
             saveField() {
-                const accessToken = 'Bearer_' + localStorage.getItem("token")
+                // const accessToken = 'Bearer_' + localStorage.getItem("token")
                 console.log(this.required)
                 console.log(this.isActive)
-                fetch('/fields', {method:'post', headers: {'Content-Type': 'application/json', 'Authorization': accessToken}, body: JSON.stringify({
-                        label: this.label, type: this.selected, options: this.options, isRequired: this.required, isActive: this.isActive
-                    })})
-                    .then(console.log)
+                this.$resource('/fields').save({
+                    label: this.label,
+                    type: this.selected,
+                    options: this.options,
+                    isRequired: this.required,
+                    isActive: this.isActive
+                }).then(console.log)
+            },
+            mounted() {
             }
-        },
-        mounted() {
         }
     }
 </script>
