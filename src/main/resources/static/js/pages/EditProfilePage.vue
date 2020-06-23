@@ -25,7 +25,7 @@
                         <label for="phone">Phone Number</label>
                         <input name="phoneNumber" id="phone" type="text" class="form-control" v-model="phoneNumber">
                     </div>
-                    <div class="d-flex input-group mt-1">
+                    <div class="d-flex input-group mt-4">
                         <button type="submit" class="flex-fill btn btn-primary" @click="safeProfile">SAVE</button>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
     export default {
         data() {
             return {
-                firstName: this.$store.state.user.user.firstName,
-                lastName: this.$store.state.user.user.lastName,
-                email: this.$store.state.user.user.email,
-                phoneNumber: this.$store.state.user.user.phoneNumber
+                firstName: this.$store.state.user.firstName,
+                lastName: this.$store.state.user.lastName,
+                email: this.$store.state.user.email,
+                phoneNumber: this.$store.state.user.phoneNumber
             }
         },
         components: {
@@ -53,9 +53,26 @@
         name: "EditProfilePage",
         methods: {
             safeProfile() {
-
+                this.$resource('/editProfile').update({
+                    id: this.$store.state.user.id,
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    phoneNumber: this.phoneNumber
+                }).then(result => {
+                    if(result.ok) {
+                        this.$store.state.user = result.data
+                    }
+                })
             }
-        }
+        },
+        /*created() {
+            this.$resource('/auth/login').get().then(result => {
+                if(result.ok) {
+                    this.$store.state.user = result.data.user
+                }
+            })
+        }*/
     }
 </script>
 
