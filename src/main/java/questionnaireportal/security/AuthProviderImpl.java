@@ -30,8 +30,6 @@ public class AuthProviderImpl implements AuthenticationProvider {
 
         String email = authentication.getName();
 
-        System.out.println(email);
-
         User user = userRepository.findByEmail(email);
         if(user == null) {
             System.out.println("Not found");

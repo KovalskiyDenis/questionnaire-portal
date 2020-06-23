@@ -57,7 +57,8 @@
                     if(result.ok) {
                         this.$resource('/auth/login').get().then(userResult => {
                             if(result.ok) {
-                                console.log(userResult)
+                                this.$store.state.user = userResult.data
+                                //console.log(userResult.data.id)
                                 this.$router.push("/fields")
                             }
                         })

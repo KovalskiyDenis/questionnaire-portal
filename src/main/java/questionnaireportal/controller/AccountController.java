@@ -9,6 +9,9 @@ import questionnaireportal.models.User;
 import questionnaireportal.repository.UserRepository;
 import questionnaireportal.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AccountController {
@@ -23,6 +26,7 @@ public class AccountController {
 
     @GetMapping("/login")
     public ResponseEntity getUser(@AuthenticationPrincipal User user) {
+
         UserResponseDto userResponse = new UserResponseDto(
                 user.getId(),
                 user.getFirstName(),
@@ -30,7 +34,11 @@ public class AccountController {
                 user.getEmail(),
                 user.getPhoneNumber()
         );
-        return ResponseEntity.ok(userResponse);
+
+        Map<Object, Object> response = new HashMap<>();
+        response.put("user", userResponse);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/registration")

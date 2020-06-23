@@ -6,8 +6,8 @@ public class FieldRequestDto {
 
     private String label;
     private Type type;
-    private boolean isRequired;
-    private boolean isActive;
+    private String isRequired;
+    private String isActive;
     private String options;
 
     public String getLabel() {
@@ -26,20 +26,20 @@ public class FieldRequestDto {
         this.type = type;
     }
 
-    public boolean isRequired() {
+    public String getIsRequired() {
         return isRequired;
     }
 
-    public void setRequired(boolean required) {
-        isRequired = required;
+    public void setIsRequired(String isRequired) {
+        this.isRequired = isRequired;
     }
 
-    public boolean isActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public String getOptions() {

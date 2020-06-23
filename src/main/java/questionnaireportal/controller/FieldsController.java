@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/fields")
+@RequestMapping("/fieldsPage")
 public class FieldsController {
 
     private final FieldsRepository fieldsRepository;
@@ -38,18 +38,14 @@ public class FieldsController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody FieldRequestDto requestField) {
-        System.out.println(requestField.isActive());
-        System.out.println(requestField.isRequired());
+    public ResponseEntity create(@RequestBody Field fieldRequest) {
+        System.out.println(fieldRequest.getLabel());
+        System.out.println(fieldRequest.getOptions());
+        System.out.println(fieldRequest.getType());
+        System.out.println(fieldRequest.getIsActive());
+        System.out.println(fieldRequest.getIsRequired());
 
-        Field field = new Field(requestField.getLabel(), requestField.getType(), requestField.isRequired(), requestField.isActive());
-
-        if(requestField.getOptions() != null) {
-            for (String option : requestField.getOptions().split("\n")) {
-                field.getOptions().add(option);
-            }
-        }
-        return ResponseEntity.ok(fieldsRepository.save(field));
+        return ResponseEntity.ok(fieldsRepository.save(fieldRequest));
     }
 
     @PutMapping
@@ -58,7 +54,17 @@ public class FieldsController {
         if(optionalField.isPresent()) {
             Field fieldFromDb = optionalField.get();
             BeanUtils.copyProperties(field, fieldFromDb, "id");
-            fieldsRepository.save(fieldFromDb);
+            return ResponseEntity.ok(fieldsRepository.save(fieldFromDb));
+        }
+        return ResponseEntity.ok("Not ok");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity removeField(@PathVariable("id") Long id) {
+        Optional<Field> optionalField = fieldsRepository.findById(id);
+        if(optionalField.isPresent()) {
+            Field fieldFromDb = optionalField.get();
+            fieldsRepository.delete(fieldFromDb);
             return ResponseEntity.ok("Ok");
         }
         return ResponseEntity.ok("Not ok");
