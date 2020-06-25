@@ -15,7 +15,7 @@ public class Response {
     /*@CollectionTable(name = "field_response", joinColumns = @JoinColumn(name = "response_id"))
     private HashMap<Long, String> fieldResponse = new HashMap<>();*/
 
-    @ElementCollection
+    @ElementCollection(targetClass = FieldResponse.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "field_response", joinColumns = @JoinColumn(name = "response_id"))
     private List<FieldResponse> response = new ArrayList<>();
 
