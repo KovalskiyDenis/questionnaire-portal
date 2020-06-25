@@ -19,7 +19,7 @@
                         </template>
                         <b-dropdown-item @click="showEditProfilePage">Edit Profile</b-dropdown-item>
                         <b-dropdown-item @click="showChangePasswordPage">Change Password</b-dropdown-item>
-                        <b-dropdown-item @click="logout">Log Out  {{buttonText}}</b-dropdown-item>
+                        <b-dropdown-item @click="logout">Log Out</b-dropdown-item>
                     </b-dropdown>
                 </div>
             </div>

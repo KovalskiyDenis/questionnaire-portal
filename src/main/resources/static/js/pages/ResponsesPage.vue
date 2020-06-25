@@ -11,7 +11,23 @@
         components: {
             Navbar
         },
-        name: "ResponsesPage"
+        name: "ResponsesPage",
+        data() {
+            return {
+                fields: [],
+                responses: []
+            }
+        },
+        created() {
+            this.$resource('/responsesPage').get().then(result => {
+                if(result.ok) {
+                    console.log(result.data)
+                }
+            })
+        },
+        methods: {
+
+        }
     }
 </script>
 

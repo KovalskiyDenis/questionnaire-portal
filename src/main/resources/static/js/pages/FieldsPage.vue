@@ -219,7 +219,7 @@
 
                 label: null,
                 selected: 'SINGLE_LINE_TEXT',
-                options: null,
+                options: '',
                 isRequired: false,
                 isActive: false,
                 optionsInput: [
@@ -247,14 +247,14 @@
         name: "FieldsPage",
         methods: {
             showOptions() {
-                if (this.selected == 'RADIO_BUTTON' || this.selected == 'COMBOBOX') {
+                if (this.selected === 'RADIO_BUTTON' || this.selected === 'COMBOBOX' || this.selected === 'CHECKBOX') {
                     this.displayOptions = 'block'
                 } else {
                     this.displayOptions = 'none';
                 }
             },
             showOptionsForEditForm() {
-                if (this.editFieldData.editType == 'RADIO_BUTTON' || this.editFieldData.editType == 'COMBOBOX') {
+                if (this.editFieldData.editType === 'RADIO_BUTTON' || this.editFieldData.editType === 'COMBOBOX' || this.editFieldData.editType === 'CHECKBOX') {
                     this.displayOptionsForEditForm = 'block'
                 } else {
                     this.displayOptionsForEditForm = 'none';
@@ -307,7 +307,7 @@
 
                     this.editFieldData.editIsRequire = this.fields[i].isRequired === 'True'
                     this.editFieldData.editIsActive = this.fields[i].isActive === 'True'
-                    this.displayOptionsForEditForm = (this.editFieldData.editType == 'RADIO_BUTTON' || this.editFieldData.editType == 'COMBOBOX') ? 'block' : 'none'
+                    this.displayOptionsForEditForm = (this.editFieldData.editType === 'RADIO_BUTTON' || this.editFieldData.editType === 'COMBOBOX' || this.editFieldData.editType === 'CHECKBOX') ? 'block' : 'none'
                 }
             },
             findById(id) {

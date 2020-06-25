@@ -6,5 +6,4 @@ import questionnaireportal.models.Field;
 import java.util.Optional;
 
 public interface FieldsRepository extends JpaRepository<Field, Long> {
-    Optional<Field> findById(Long Id);
 }
