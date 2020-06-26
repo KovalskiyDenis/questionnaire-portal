@@ -42,6 +42,7 @@
 
 <script>
     import Navbar from "../components/navbar/Navbar.vue"
+    import {addhandler} from "util/websocket";
 
     export default {
         components: {
@@ -57,13 +58,14 @@
         created() {
             this.$resource('/responsesPage').get().then(result => {
                 if(result.ok) {
-                    console.log(result.data)
                     this.fields = result.data.fields
                     this.responses = result.data.responses
-                    console.log(this.responses[0].response)
-                    console.log(this.responses[0].fieldId)
-                    console.log(this.responses[0].fieldResponse)
+                    console.log(this.responses)
                 }
+            })
+            addhandler(data => {
+                let newResponse = {id: data.body.response, response: data.body.response}
+                this.responses.push(newResponse)
             })
         },
         methods: {

@@ -75,6 +75,7 @@
 
 <script>
     import Navbar from 'components/navbar/Navbar.vue'
+    import { sendResponse } from 'util/websocket'
 
     export default {
         name: "QuestionnairePage",
@@ -105,7 +106,8 @@
                     response.push(fieldResponse)
                 })
 
-                this.$resource('/questionnaire').save({response: response}).then()
+                //this.$resource('/questionnaire').save({response: response}).then()
+                sendResponse({response: response})
             }
         }
     }

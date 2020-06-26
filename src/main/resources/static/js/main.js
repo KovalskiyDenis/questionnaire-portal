@@ -8,7 +8,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/js/bootstrap'
 import '@babel/polyfill'
 import store from 'store/store'
+import {connect} from "./util/websocket";
 
+connect()
 
 Vue.use(VueResource)
 Vue.use(BootstrapVue)

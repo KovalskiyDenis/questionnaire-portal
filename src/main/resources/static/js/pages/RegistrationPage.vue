@@ -11,13 +11,13 @@
                             <h4>Sign Up</h4>
                         </div>
                         <div class="mt-2">
-                            <input class="form-control" type="email" placeholder="Email" v-model="email">
+                            <input class="form-control" type="email" placeholder="Email *" v-model="email">
                         </div>
                         <div class="mt-2">
-                            <input class="form-control" type="password" placeholder="Password" v-model="password">
+                            <input class="form-control" type="password" placeholder="Password *" v-model="password">
                         </div>
                         <div class="mt-2">
-                            <input class="form-control" type="password" placeholder="Confirm Password" v-model="confirmPassword">
+                            <input class="form-control" type="password" placeholder="Confirm Password *" v-model="confirmPassword">
                         </div>
                         <div class="mt-2">
                             <input class="form-control" type="text" placeholder="First Name" v-model="firstName">
