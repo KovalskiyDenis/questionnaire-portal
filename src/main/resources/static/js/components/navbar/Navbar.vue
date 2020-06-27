@@ -42,7 +42,7 @@
         },
         methods: {
             showLoginPage() {
-                this.$router.push('/login')
+                this.$router.push('/login').then()
             },
             showFieldsPage() {
                 this.$router.push('/fields')
@@ -57,6 +57,9 @@
                 this.$router.push('/changePassword')
             },
             logout() {
+                this.$resource('/auth/logout').save().then(result => {
+
+                })
             }
         },
         components: {LogoType}

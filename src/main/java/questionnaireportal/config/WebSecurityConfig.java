@@ -24,20 +24,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/auth/registration", "/registration" , "/login", "/questionnaire", "/seveResponse").permitAll()
+                    .antMatchers("/", "/auth/registration" ,"/auth/login", "/questionnaire", "/saveResponse").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                    //.loginProcessingUrl("/auth/login")
                     .loginPage("/auth/login")
                     .usernameParameter("email")
                     .permitAll()
                 .and()
                     .logout()
+                    .logoutUrl("/auth/logout")
                     .permitAll()
-                .and().
-                    csrf().disable()
-                    .httpBasic().disable();
+                .and()
+                    .csrf().disable()
+                    .httpBasic().disable()
+                    .cors().disable();
     }
 
     @Override

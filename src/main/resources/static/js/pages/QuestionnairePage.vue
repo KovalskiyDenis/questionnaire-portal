@@ -62,10 +62,14 @@
                             </div>
                         </div>
 
+                        <div v-if="field.alerts.length !== 0" class="alert alert-warning mt-1" role="alert">
+                            <div v-for="alert in field.alerts">{{alert}}</div>
+                        </div>
+
                     </div>
 
                     <div class="d-flex input-group mt-4">
-                        <button type="submit" class="flex-fill btn btn-primary" @click="saveResponse">CHANGE</button>
+                        <button type="submit" class="flex-fill btn btn-primary" @click="saveResponse">SAVE</button>
                     </div>
                 </div>
             </div>
@@ -84,14 +88,16 @@
         },
         data() {
             return {
-                fields: []
+                fields: [],
+
+                valid: false
             }
         },
         created() {
             this.$resource('/questionnaire').get().then(result => {
                 if(result.ok) {
                     result.data.forEach(element => {
-                        let elem = {field: element, response: null}
+                        let elem = {field: element, response: null, alerts: []}
                         this.fields.push(elem)
                     })
                 }
@@ -99,6 +105,12 @@
         },
         methods: {
             saveResponse() {
+
+                this.validateForm()
+                if (this.valid) {
+
+                }
+
                 let response = []
                 this.fields.forEach(element => {
                     let responseValue = element.field.type === 'CHECKBOX' ? (element.response ? 'True' : 'False') : element.response
@@ -108,6 +120,20 @@
 
                 //this.$resource('/questionnaire').save({response: response}).then()
                 sendResponse({response: response})
+            },
+
+            validateForm() {
+                this.valid = true
+
+                this.fields.forEach(element => {
+                    element.alerts = []
+                    if(element.field.isRequired === 'True') {
+                        if(element.response == null || element.response === '') {
+                            element.alerts.push("This field is required")
+                            this.valid = false
+                        }
+                    }
+                })
             }
         }
     }

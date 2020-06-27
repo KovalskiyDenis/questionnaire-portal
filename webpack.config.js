@@ -12,8 +12,8 @@ module.exports = {
         allowedHosts: [
             'localhost:8080'
         ],
-        stats: 'errors-only',
-        clientLogLevel: 'error'
+/*        stats: 'errors-only',
+        clientLogLevel: 'error'*/
     },
     module: {
         rules: [

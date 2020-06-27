@@ -8,7 +8,7 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-auto mr-auto">
-                                    <label class="align-bottom">Fields</label>
+                                    <h3>Fields</h3>
                                 </div>
                                 <div class="col-auto align-self-end">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">ADD FIELD</button>
@@ -267,8 +267,14 @@
                     options: this.options.split('\n'),
                     isRequired: this.isRequired ? 'True' : 'False',
                     isActive: this.isActive ? 'True' : 'False',
-                }).then(console.log)
+                }).then()
                 this.showFields = true
+
+                this.label = null
+                this.options = ''
+                this.selected = 'SINGLE_LINE_TEXT'
+                this.isRequired = false
+                this.isActive = false
             },
             saveEditedField(id) {
                 this.$resource('/fieldsPage').update({
@@ -312,7 +318,7 @@
             },
             findById(id) {
                 for(let i = 0; i < this.fields.length; i++) {
-                    if(this.fields[i].id == id) {
+                    if(this.fields[i].id === id) {
                         return i
                     }
                 }

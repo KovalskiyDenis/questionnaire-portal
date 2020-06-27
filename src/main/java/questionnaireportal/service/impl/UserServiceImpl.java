@@ -31,13 +31,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
+    public boolean register(User user) {
 
-        //Проверить на существование
-        /*User userFromDB = userRepository.findByEmail(user.getEmail());
+        User userFromDB = userRepository.findByEmail(user.getEmail());
         if(userFromDB != null) {
+            return false;
         }
-        */
 
         String message = String.format("Hello, %s!\n" +
                 "You have successfully registered on the site: http://localhost:8080/", user.getFirstName());
@@ -45,7 +44,9 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        return true;
     }
 
     @Override

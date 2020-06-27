@@ -1,6 +1,7 @@
 package questionnaireportal.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class AccountController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/user")
     public ResponseEntity getUser(@AuthenticationPrincipal User user) {
 
         UserResponseDto userResponse = new UserResponseDto(
@@ -44,14 +45,14 @@ public class AccountController {
     @PostMapping("/registration")
     public ResponseEntity registry(@RequestBody User user) {
 
-        System.out.println(user.getEmail());
-        System.out.println(user.getFirstName());
-        System.out.println(user.getLastName());
-        System.out.println(user.getPassword());
-        System.out.println(user.getPhoneNumber());
+        Map<Object, Object> response = new HashMap<>();
 
-        userService.register(user);
+        if(!userService.register(user)) {
+            response.put("message", "User exists");
+        } else {
+            response.put("message", "Success");
+        }
 
-        return ResponseEntity.ok("User registered");
+        return ResponseEntity.ok(response);
     }
 }

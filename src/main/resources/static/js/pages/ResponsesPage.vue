@@ -60,7 +60,6 @@
                 if(result.ok) {
                     this.fields = result.data.fields
                     this.responses = result.data.responses
-                    console.log(this.responses)
                 }
             })
             addhandler(data => {

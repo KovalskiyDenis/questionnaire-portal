@@ -26,7 +26,7 @@ public class ResponsesPageController {
 
         Map<Object, Object> response = new HashMap<>();
 
-        response.put("fields", fieldsRepository.findAll());
+        response.put("fields", fieldsRepository.findActive());
         response.put("responses", responseRepository.findAll());
 
         return ResponseEntity.ok(response);

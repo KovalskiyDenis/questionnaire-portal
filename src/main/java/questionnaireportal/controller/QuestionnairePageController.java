@@ -19,7 +19,7 @@ public class QuestionnairePageController {
 
     @GetMapping
     public ResponseEntity getFields() {
-        return ResponseEntity.ok(fieldsRepository.findAll());
+        return ResponseEntity.ok(fieldsRepository.findActive());
     }
 
     @PostMapping
