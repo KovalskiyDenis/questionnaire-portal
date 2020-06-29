@@ -4,7 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import questionnaireportal.dto.request.FieldRequestDto;
 import questionnaireportal.models.Field;
 import questionnaireportal.repository.FieldsRepository;
 import questionnaireportal.service.UserService;
@@ -39,12 +38,6 @@ public class FieldsController {
 
     @PostMapping
     public ResponseEntity create(@RequestBody Field fieldRequest) {
-        System.out.println(fieldRequest.getLabel());
-        System.out.println(fieldRequest.getOptions());
-        System.out.println(fieldRequest.getType());
-        System.out.println(fieldRequest.getIsActive());
-        System.out.println(fieldRequest.getIsRequired());
-
         return ResponseEntity.ok(fieldsRepository.save(fieldRequest));
     }
 

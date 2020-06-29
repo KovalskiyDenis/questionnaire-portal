@@ -1,8 +1,8 @@
 package questionnaireportal.models;
 
 import javax.persistence.*;
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "responses")
@@ -18,6 +18,8 @@ public class Response {
     @ElementCollection(targetClass = FieldResponse.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "field_response", joinColumns = @JoinColumn(name = "response_id"))
     private List<FieldResponse> response = new ArrayList<>();
+
+    //private User user;
 
     public Long getId() {
         return Id;

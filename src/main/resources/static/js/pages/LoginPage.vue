@@ -1,5 +1,4 @@
 <template>
-    <div>
         <div class="container">
             <div class="d-flex justify-content-center">
                 <div class="card mt-5" style="width: 23rem;">
@@ -39,13 +38,12 @@
                         </div>
                         <div class="d-flex justify-content-center">
                             <label>Don't have account?&nbsp;</label>
-                            <a href="" @click="showRegistrationPage"> Sign In</a>
+                            <a href="" @click="showRegistrationPage">Sign Up</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>

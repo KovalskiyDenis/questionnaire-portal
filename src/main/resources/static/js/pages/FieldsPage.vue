@@ -105,7 +105,7 @@
                                     <td>{{field.isRequired}}</td>
                                     <td>{{field.isActive}}</td>
                                     <td>
-                                        <button class="btn" @click="editField(field.id)" data-toggle="modal" data-target="#editModal">
+                                        <button class="btn" @click="showEditFieldForm(field.id)" data-toggle="modal" data-target="#editModal">
                                             <svg class="bi bi-pencil-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -241,6 +241,12 @@
                     editOptions: null,
                     editIsRequire: null,
                     editIsActive: null
+                },
+
+                valid: true,
+
+                alerts: {
+                    labelAlerts: []
                 }
             }
         },
@@ -261,38 +267,48 @@
                 }
             },
             saveField() {
-                this.$resource('/fieldsPage').save({
-                    label: this.label,
-                    type: this.selected,
-                    options: this.options.split('\n'),
-                    isRequired: this.isRequired ? 'True' : 'False',
-                    isActive: this.isActive ? 'True' : 'False',
-                }).then()
-                this.showFields = true
+                //this.validateForm()
+                if(this.valid) {
+                    this.$resource('/fieldsPage').save({
+                        label: this.label,
+                        type: this.selected,
+                        options: this.options.split('\n'),
+                        isRequired: this.isRequired ? 'True' : 'False',
+                        isActive: this.isActive ? 'True' : 'False',
+                    }).then()
+                    this.showFields = true
 
-                this.label = null
-                this.options = ''
-                this.selected = 'SINGLE_LINE_TEXT'
-                this.isRequired = false
-                this.isActive = false
+                    this.label = null
+                    this.options = ''
+                    this.selected = 'SINGLE_LINE_TEXT'
+                    this.isRequired = false
+                    this.isActive = false
+                }
+
             },
             saveEditedField(id) {
-                this.$resource('/fieldsPage').update({
-                    id: id,
-                    label: this.editFieldData.editLabel,
-                    type: this.editFieldData.editType,
-                    options: this.editFieldData.editOptions.split('\n'),
-                    isRequired: this.editFieldData.editIsRequire ? 'True' : 'False',
-                    isActive: this.editFieldData.editIsActive ? 'True' : 'False',
-                }).then(result=> {
-                    if(result.ok) {
-                        let field = result.data
-                        const index = this.findById(field.id)
-                        this.fields[index] = field
-                    }
-                })
+                //this.validateForm()
+                if(this.valid) {
+                    this.$resource('/fieldsPage').update({
+                        id: id,
+                        label: this.editFieldData.editLabel,
+                        type: this.editFieldData.editType,
+                        options: this.editFieldData.editOptions.split('\n'),
+                        isRequired: this.editFieldData.editIsRequire ? 'True' : 'False',
+                        isActive: this.editFieldData.editIsActive ? 'True' : 'False',
+                    }).then(result=> {
+                        if(result.ok) {
+                            let field = result.data
+                            const index = this.findById(field.id)
+                            this.fields[index] = field
+                        }
+                    })
+                }
             },
-            editField(fieldId) {
+
+            showEditFieldForm(fieldId) {
+                this.alerts.labelAlerts = []
+
                 const i = this.findById(fieldId)
                 if(i > -1) {
                     this.editFieldData.editId = fieldId
@@ -331,6 +347,17 @@
                         this.fields.splice(this.findById(fieldId), 1)
                     }
                 })
+            },
+
+            validateForm() {
+                this.valid = true
+
+                //label
+                this.alerts.labelAlerts = []
+                if ((this.label === '' || this.email == null) || (this.editFieldData.editLabel === '' || this.editFieldData.editLabel)) {
+                    this.alerts.labelAlerts.push('Label is required')
+                    this.valid = false
+                }
             }
         },
         created() {
